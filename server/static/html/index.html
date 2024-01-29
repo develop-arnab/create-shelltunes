@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.8.1/lottie.min.js"
+      integrity="sha512-V1YyTKZJrzJNhcKthpNAaohFXBnu5K9j7Qiz6gv1knFuf13TW/3vpgVVhJu9fvbdW8lb5J6czIhD4fWK2iHKXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.min.js"
+      integrity="sha512-ybPp3kCrNQXdvTfh99YLIdnajWnQvHuEKDJ+b26mxI9w+pLhnBo3HmNLJ1pEUBFO1Q0bfJxApeqecNbmaV763g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js"
+      integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <!--========== BOX ICONS ==========-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!-- <link rel="icon" type="image/png" href="./assets/favicon.png" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css"
+      integrity="sha512-rSWTr6dChYCbhpHaT1hg2tf4re2jUxBWTuZbujxKg96+T87KQJriMzBzW5aqcb8jmzBhhNSx4XYGA6/Y+ok1vQ=="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../assets/css/canvastyle.css" />
+    <title>Shelltunes Create</title>
+  </head>
+
+  <body class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <!-- <img src="./assets/logo.svg" alt="logo" class="logo" /> -->
+      <div class="canvas-popup visible">
+        <div class="tab-content">
+          <input id="canvas-color-picker" value="#3399FF80" data-jscolor="{}" />
+          <div class="horizontal_container">
+            <p>Width:</p>
+            <input
+              class="inputView"
+              type="text"
+              id="canvas-width"
+              name="width"
+            />
+          </div>
+          <div class="horizontal_container">
+            <p>Height:</p>
+            <input
+              class="inputView"
+              type="text"
+              id="canvas-height"
+              name="height"
+            />
+          </div>
+          <div>
+            <a id="saveCanvasButton" href="#" class="nav__link">
+                <i class="bx bxs-save nav__icon"></i>
+              <h3 style="color: rgb(255, 255, 255)">Save</h3>
+            </a>
+          </div>
+          <div>
+            <a id="loadCanvasButton" href="#" class="nav__link">
+                <i class="bx bxs-save nav__icon"></i>
+              <h3 style="color: rgb(255, 255, 255)">Load</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="globe">
+              <i class="fa fa-globe"></i>
+            </div> -->
+      <button class="canvas-file dd-toggle">File</button>
+      <button class="dd-toggle">View</button>
+      <button class="dd-toggle">New</button>
+      <button class="dd-toggle">
+        <i class="fas fa-crown dd-toggle__icon"></i>
+      </button>
+      <button class="dd-toggle">
+        <i class="fas fa-bell dd-toggle__icon"></i>
+      </button>
+      <button class="dd-toggle">
+        <!-- <img
+          src="./assets/user-photo.jpeg"
+          alt="user-photo"
+          class="dd-toggle__img"
+        /> -->
+        <span class="dd-toggle__text">James O.</span>
+      </button>
+    </header>
+
+    <!-- MAIN -->
+    <div class="app__container">
+      <div class="sidebar">
+        <section class="menu">
+          <button class="menu__button menu__button--active">
+            <i class="fas fa-layer-group menu__icon"></i>
+            <span class="menu__text">Templates</span>
+          </button>
+          <button class="menu__button">
+            <i class="fas fa-image menu__icon"></i>
+            <span class="menu__text">Images</span>
+          </button>
+          <button class="menu__button">
+            <i class="fas fa-font menu__icon"></i>
+            <span class="menu__text">Text/Font</span>
+          </button>
+          <button class="menu__button">
+            <i class="fas fa-shapes menu__icon"></i>
+            <span class="menu__text">Shapes</span>
+          </button>
+          <button class="menu__button">
+            <i class="fas fa-shapes menu__icon"></i>
+            <span class="menu__text">Layers</span>
+          </button>
+        </section>
+
+        <footer class="footer">
+          <small class="copyright">&copy; Shelltunes</small>
+        </footer>
+      </div>
+
+      <div class="pulloutSidebar" id="animatedElement">
+        <section class="panel" id="templates-section">
+          <div class="panel__top">
+            <h1 class="first-heading">Templates</h1>
+          </div>
+          <button id="SearchButton" type="button">Search</button>
+          <div>
+            <label for="searchInput">Search:</label>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Enter your search query"
+            />
+            <button id="performSearch" onclick="performSearch()">Search</button>
+          </div>
+          <div id="animation-result" class="panel__images">
+            <div class="panel__img" id="demo-anim" class="animView"></div>
+            <div class="panel__img" id="doctor-anim" class="animView"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="images-section">
+          <div class="panel-section">
+            <div class="panel__top">
+              <h1 class="first-heading">Images</h1>
+            </div>
+            <!-- <div class="container">
+              <div class="interior">
+                <a class="btn" href="#open-modal">Open Modal</a>
+              </div>
+            </div> -->
+            <div id="open-modal" class="modal-window">
+              <div>
+                <a href="#" title="Close" class="modal-close">Close</a>
+                <h1>Do you want to add this Image?</h1>
+                <div>
+                  You can add this image as an element or set the canvas
+                  background..
+                </div>
+                <br />
+                <div><small>Check out 👇</small></div>
+                <button class="button" id="btnCreateImage">Add Image</button>
+                <button class="button" id="btnCreateImageBG">
+                  Set Background
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <input
+                type="text"
+                id="imagesSearchInput"
+                placeholder="Enter your search query"
+              />
+              <button class="button" id="searchImages" onclick="searchImages()">
+                Search
+              </button>
+            </div>
+            <div id="images-result" class="panel__images">
+              <a href="#open-modal">
+                <img
+                  class="panel__img"
+                  src="https://images.unsplash.com/photo-1543096222-72de739f7917?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&fit=crop&w=280&q=100"
+                  alt="Uploaded image"
+                />
+              </a>
+              <a href="#open-modal">
+                <img
+                  class="panel__img"
+                  src="https://images.unsplash.com/photo-1475598322381-f1b499717dda?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&h=280&q=100"
+                  alt="Uploaded image"
+                />
+              </a>
+              <a href="#open-modal">
+                <img
+                  class="panel__img"
+                  src="https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&w=280&q=100"
+                  alt="Uploaded image"
+                />
+              </a>
+              <a href="#open-modal">
+                <img
+                  class="panel__img"
+                  src="https://images.unsplash.com/photo-1615749190340-34c7c3b16784?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&w=280&q=100"
+                  alt="Uploaded image"
+                />
+              </a>
+              <a href="#open-modal">
+                <img
+                  class="panel__img"
+                  src="https://images.unsplash.com/photo-1615707547992-93435f1e7f13?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&w=280&q=100"
+                  alt="Uploaded image"
+                />
+              </a>
+              <button class="panel__btn">
+                <i class="fas fa-plus panel__upload-icon"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="text-section">
+          <div class="panel__top">
+            <h1 class="first-heading">Text</h1>
+          </div>
+          <div>
+            <div>
+              <!-- <div class="horizontal_box">
+                <input
+                  id="animationText"
+                  placeholder="Enter your text..."
+                  class="input-box input-box-half"
+                />
+                <input
+                  id="animationText2"
+                  placeholder="Enter your text..."
+                  class="input-box input-box-half"
+                />
+                <i class="bx bx-search header__icon"></i>
+              </div> -->
+              <div class="horizontal_box">
+                <button class="button" id="btnCreateText">Add TextBOX</button>
+                <!-- <button id="addAnimText" onclick="addAnimText()">Add Text</button> -->
+                <select id="font-family"></select>
+              </div>
+            </div>
+            <div class="text-customise">
+              <div id="object-control"></div>
+              <button class="button" id="addAnimText" onclick="addAnimText()">
+                Add Text
+              </button>
+            </div>
+            <div class="panel__images">
+              <!-- <button onclick="addTextAnim()" id="text-anim" class="animView">Hello</button> -->
+              <div id="text-anim" class="animView panel__img"></div>
+              <div id="text-anim2" class="animView panel__img"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="shapes-section">
+          <div class="panel__top">
+            <h1 class="first-heading">Shapes</h1>
+          </div>
+          <div class="panel__images">
+            <div class="panel__img" id="createRect" onclick="createRect()">
+              <i class="bx bx-square nav__icon panel__img"></i>
+            </div>
+
+            <div class="panel__img" id="createCircle" onclick="createCircle()">
+              <i class="bx bx-circle nav__icon panel__img"></i>
+            </div>
+          </div>
+
+          <div class="tab">
+            <input type="checkbox" id="chck1" class="checkbox" />
+            <label class="tab-label" for="chck1">Object Control</label>
+            <div class="tab-content">
+              <input id="color-picker" value="#3399FF80" data-jscolor="{}" />
+              <div class="horizontal_container">
+                <p>Width:</p>
+                <input class="inputView" type="text" id="width" name="width" />
+              </div>
+              <div class="horizontal_container">
+                <p>Height:</p>
+                <input
+                  class="inputView"
+                  type="text"
+                  id="height"
+                  name="height"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="panel" id="layers-section">
+          <div class="panel__top">
+            <h1 class="first-heading">Layers</h1>
+          </div>
+          <div class="panel__images">
+            <ul id="containerLayers"></ul>
+          </div>
+        </section>
+      </div>
+      <div class="iconPullHide" onclick="toggleAnimation()">
+        <i class="fas fa-angle-double-left"></i>
+      </div>
+      <main class="main">
+        <!-- <div class="artboard">
+          <section class="canvas">
+            <img
+              class="canvas__bg-img"
+              src="https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&w=2134&q=100"
+              alt="Background image"
+            />
+            <img
+              class="canvas__fg-img"
+              src="https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&fit=crop&w=1453&q=85"
+              alt="Foreground image"
+            />
+            <div class="canvas__circle"></div>
+            <div class="canvas__circle"></div>
+            <div class="canvas__circle"></div>
+            <div class="canvas__circle"></div>
+          </section>
+
+          <section class="tools">
+            <button class="tool tool--active">
+              <i class="fas fa-crop-alt tool__icon"></i>
+            </button>
+            <button class="tool">
+              <i class="fas fa-object-group tool__icon"></i>
+            </button>
+            <button class="tool">
+              <i class="fas fa-pen tool__icon"></i>
+            </button>
+            <button class="tool">
+              <i class="fas fa-trash tool__icon"></i>
+            </button>
+          </section>
+        </div> -->
+        <section class="mainCanvas">
+          <div class="info-bar">
+            <section class="breadcrumbs">
+              <div class="tab-content horizontal_box">
+                <div id="pause">
+                  <a href="#" class="nav__link">
+                    <i class="bx bx-pause-circle nav__icon_black"></i>
+                  </a>
+                </div>
+                <div id="play">
+                  <a href="#" class="nav__link">
+                    <i class="bx bx-play-circle nav__icon_black"></i>
+                  </a>
+                </div>
+                <div id="stop">
+                  <a href="#" class="nav__link">
+                    <i class="bx bx-stop-circle nav__icon_black"></i>
+                  </a>
+                </div>
+                <input id="slider" type="range" min="0" max="100" value="0" />
+              </div>
+            </section>
+
+            <button class="button">Publish</button>
+
+            <!-- <div class="pop_menu"> -->
+            <div class="popup visible">
+              <div class="menu">Settings</div>
+                        <div>
+            <a id="saveImageButton" href="#" class="nav__link">
+                <i class="bx bxs-save nav__icon"></i>
+              <h3 style="color: rgb(0, 0, 0)">Save Image</h3>
+            </a>
+          </div>
+              <div class="menu">Help</div>
+              <div class="menu">Logout</div>
+            </div>
+            <div class="globe">
+              <i class="fa fa-save"></i>
+            </div>
+            <!-- </div> -->
+          </div>
+          <canvas id="canvas"></canvas>
+        </section>
+      </main>
+    </div>
+
+    <!-- <script src="/js/main.js"></script> -->
+    <script
+      type="module"
+      src="/js/CanvasHelpers/CreateFabricAnimation.js"
+    ></script>
+    <script type="module" src="/js/CanvasHelpers/CreateFabricArt.js"></script>
+
+    <script type="module" src="/js/create.js"></script>
+    <script type="module" src="/js/CanvasHelpers/shapesHelper.js"></script>
+    <!-- <script type="module" src="/js/createTextAnimator.js"></script> -->
+    <script src="/lib/jscolor.js"></script>
+    <script src="/lib/fontfaceobserver.js"></script>
+    <script type="module" src="/js/constants.js"></script>
+    <!-- <script type="module" src="/js/searchMorph.js"></script> -->
+    <script type="module" src="/services/animationsServices.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var menuPopup = document.querySelector(".popup");
+        document.querySelector(".globe").addEventListener(
+          "click",
+          function () {
+            menuPopup.classList.toggle("visible");
+            // secret message
+            console.log("Yes, salmon is a color!");
+          },
+          false
+        );
+        var filePopup = document.querySelector(".canvas-popup");
+        document.querySelector(".canvas-file").addEventListener(
+          "click",
+          function () {
+            filePopup.classList.toggle("visible");
+            // secret message
+            console.log("Yes, salmon is a color!");
+          },
+          false
+        );
+        const menuButtons = document.querySelectorAll(".menu__button");
+        const panelSections = document.querySelectorAll(".panel");
+        const collapseIcon = document.querySelector(".panel__collapse-icon");
+
+        // Hide all panels initially
+        panelSections.forEach((panel) => {
+          panel.style.display = "none";
+        });
+
+        // Show the default panel (Templates)
+        const defaultPanel = document.getElementById("templates-section");
+        defaultPanel.style.display = "flex";
+
+        // Keep track of the active panel
+        let activePanel = defaultPanel;
+
+        menuButtons.forEach((button, index) => {
+          button.addEventListener("click", () => {
+            // Hide the currently active panel
+            activePanel.style.display = "none";
+
+            // Show the selected panel
+            panelSections[index].style.display = "flex";
+
+            // Update the activePanel variable
+            activePanel = panelSections[index];
+          });
+        });
+
+        // collapseIcon.addEventListener('click', () => {
+        //   // Toggle the "collapsed" class on the active panel
+        //   activePanel.classList.toggle('collapsed');
+        // });
+      });
+    </script>
+    <script>
+      function toggleAnimation() {
+        var element = document.getElementById("animatedElement");
+
+        if ((element.style.display = "none")) {
+          element.classList.toggle("animate");
+          element.style.display = "block";
+        } else {
+          element.classList.toggle("animate");
+          setTimeout(function () {
+            element.style.display = "none";
+          }, 1000);
+        }
+      }
+    </script>
+  </body>
+</html>
