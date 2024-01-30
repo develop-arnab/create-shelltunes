@@ -17,7 +17,8 @@ const initCanvas = (id) => {
   });
 };
 const canvas = initCanvas("canvas");
-const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://create.shelltunes.com";
 // const canvas = new fabric.Canvas("canvas");
 document.getElementById("canvas").fabric = canvas;
 
@@ -209,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       // Make API call
-      await fetch("http://localhost:8080/api/search-image", requestOptions)
+      await fetch("https://create.shelltunes.com/api/search-image", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log("Returned data ", data);
